@@ -83,7 +83,7 @@ Your first order of business is to generate a backlog of issues for the data tea
 Fix object.new to streamline creation of objects, and then document all other changes you feel the team needs to make to arrive at a solution you feel is robust, scalable, and properly documented. For each issue identified be as verbose or as brief as required.
 
 ###Task 14
-The deployment team needs the latest version of the database in DAPCPAC format with any and all fixes you chose to make as a part of task 13. Please provide it to them and ensure it is correctly versioned.
+The deployment team needs the latest version of the database in DACPAC format with any and all fixes you chose to make as a part of task 13. Please provide it to them and ensure it is correctly versioned.
 
 
 ## Submissions
