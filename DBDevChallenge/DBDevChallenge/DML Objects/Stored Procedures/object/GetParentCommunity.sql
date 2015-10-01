@@ -11,8 +11,7 @@ BEGIN
         @ObjectId UNIQUEIDENTIFIER,
         @ParentId UNIQUEIDENTIFIER;
 
-    SET @ParentId = (SELECT parent_guid FROM dbo.NavigationContent WHERE url_hash = @URLHash AND community_id = @CommunityGUID 
-    UNION ALL SELECT parent_guid FROM dbo.NavigationContent WHERE url_hash = @URLHash AND community_id = @CommunityGUID); 
+    SET @ParentId = (SELECT parent_guid FROM dbo.NavigationContent WHERE url_hash = @URLHash AND community_id = @CommunityGUID UNION ALL SELECT parent_guid FROM dbo.NavigationContent WHERE url_hash = @URLHash AND community_id = @CommunityGUID); 
 
     WITH ObjectParents AS
     (
@@ -20,14 +19,13 @@ BEGIN
             object_guid
         FROM dbo.NavigationObject
         WHERE object_guid = @ParentId
-            AND community_id = @CommunityGUID
+        AND community_id = @CommunityGUID
         UNION ALL
         SELECT  
             c.object_guid
         FROM dbo.NavigationObject c
         JOIN ObjectParents p
-            ON p.object_guid = c.parent_guid
-            AND c.community_id = @CommunityGUID
+            ON p.object_guid = c.parent_guid AND c.community_id = @CommunityGUID
     )
     SELECT  
         o.*
