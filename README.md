@@ -20,6 +20,12 @@ To complete this challenge you will require at least the following:
 * The space available to restore and run the DBDevChallenge_With_Test_Data.bak database
 * Solid TSQL skills
 
+## Setup
+Before you begin these tasks you will want to do the following:
+* Restore the pre-loaded challenge database to your test SQL Server  (https://github.com/IglooSoftware/Code-Challenge-DB/blob/master/DBDevChallenge_With_Test_Data.bak)
+* Load "DBDevChallenge" Visual Studio 2015 database project and familiarize yourself with the structure
+* Validate your restored database is in sync with the project
+
 ## Tasks
 ### Task 1
 The table object.object contains a list of all objects the iGleww cloud solution can work with. When an object is flagged for deletion, the recycledid column will be non-NULL and when the object is not flagged the value is NULL. A team member has asked you to write a script that will return pkobjectid, createddate, and a bool (column name: is_deleted) indicating whether the object is deleted or not for all rows in the table.
