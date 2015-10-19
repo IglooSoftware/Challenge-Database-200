@@ -84,7 +84,7 @@ It's another bug. The sales team at iGleww recently signed up a large customer t
 
 ###Task 14
 The data architect at iGleww abruptly stands up in the middle off the office. She begins screaming obscenities and you catch something about "object.new", string manipulation, CPU costs, C#, and then HR rushes over to calm her. A few days pass and the previous data architect is promoted to director of the collections department and you've been promoted to data architect - congratulations!  
-Your first task is geenerating a backlog of issues for the data team to resolve and you start by looking at the object.new stored procedure. You notice several issues with this procedure and then realize these mistakes are repeated throughout the database solution. You have the full buy-in from the platform developers to change any interfaces (stored procedure inputs and outputs are interfaces) you feel need changing.  
+Your first task is generating a backlog of issues for the data team to resolve and you start by looking at the object.new stored procedure. You notice several issues with this procedure and then realize these mistakes are repeated throughout the database solution. You have the full buy-in from the platform developers to change any interfaces (stored procedure inputs and outputs are interfaces) you feel need changing.  
 Fix object.new to streamline creation of objects, and then document all other changes you feel the team needs to make to arrive at a solution you feel is robust, scalable, and properly documented. For each issue identified be as verbose or as brief as required.
 
 ###Task 15 (Optional)
