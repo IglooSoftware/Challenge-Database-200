@@ -6,8 +6,7 @@ You are a new database developer at iGleww Inc. iGleww sells a cloud-based solut
 iGleww has hired a solid team of data professionals now and you're working together to pay off accumulated technical debt.
 
 ## Instructions
-Below you'll find a series of tasks. To complete each task you will need to use SQL Server and/or Visual Studio. In doing so you will typically generate TSQL scripts and potentially modify the Database project. On some occasions a text file may be all you need to use to record answers. In each case create a directory named for the task number (under a single root directory eg. "IglooDBChallenge") and store any and all work generated. If you modify the database project or any 
-of its files, include the entire solution directory. Do not include database backups.
+Below you'll find a series of tasks. To complete each task you will need to use SQL Server and/or Visual Studio. In doing so you will typically generate TSQL scripts and potentially modify the Database project. On some occasions a text file may be all you need to use to record answers. In each case create a directory named for the task number (under a single root directory eg. "IglooDBChallenge") and store any and all work generated. If you modify the database project or any of its files, include the entire solution directory. Do not include database backups.
 As an example, at the completion of task one you would save your SQL script in a directory such as \IglooDBChallenge\1\ObjectQuery.sql  
 You don't have to complete every task before submitting the challenge and we recommended you limit yourself to 2-4 hours. Tasks marked (Optional) are just that - we don't expect everyone to get these, but it's great if you can!
 
@@ -21,8 +20,8 @@ To complete this challenge you will require the following:
 
 ## Setup
 Before you begin these tasks you will need to do the following:
-* Restore the pre-loaded challenge database to your test SQL Server  (https://github.com/IglooSoftware/Code-Challenge-DB/blob/master/DBDevChallenge_With_Test_Data.bak)
-* Load "DBDevChallenge" Visual Studio 2015 database project and familiarize yourself with the structure
+* Restore the included challenge database to your test SQL Server.  (/DBDevChallenge_With_Test_Data.bak)
+* Load "DBDevChallenge" Visual Studio 2015 database project and familiarize yourself with the structure.
 
 ## Tasks
 ### Task 1
@@ -37,13 +36,18 @@ One of the front end developers got a hold of your query from task 2. They are d
 a) Do you notice the results coming back in any discernable order?  
 b) If so, what order?  
 c) The Jr. DBA isn't convinced that you're correct. How can you prove to them that you are correct?  
-d) Can the front end developer depend on the results always returning this way? Why or why not?
+d) Can the front end developer depend on the results consistently returning in this order? Why or why not?
 
 ### Task 4
 The DBA team is swamped and needs some help. Please provide them with a query that will return the procedure name and schema name of each stored procedure in the database that was created by iGleww.
 
 ### Task 5
-There are two 'navigation' tables in the database: NavigationObject and NavigationContent. These tables model the parent-child hierarchy that exists between iGleww communities, containers, and content. Object type definitions can be found on object.type. Content objects are leaf-level objects, never have children, and are stored in the NavigationObject table. Containers have parents and children with the exception of community objects which are root objects NULL parent) and are object_type 3. You have been tasked with writing a recursive query that returns community_guid, object_guid, parent_guid, and is_disabled for all container and content objects which are children the community with object_guid = 'DF5E1A78-0973-4B02-AC33-5FF211F115B4'.
+There are two 'navigation' tables in the database: NavigationObject and NavigationContent. These tables model the parent-child hierarchy that exists between iGleww communities, containers, and content. Object type definitions can be found on object.type. 
+- Content objects are leaf-level objects, never have children, and are stored in the NavigationContent table. 
+- Containers (except for community objects) have parents and children, and are stored in the NavigationObject table. 
+- Community objects have only children, always have a NULL parent_id, and are object type 3. These are stored in the NavigationObject Table as root nodes.
+
+You have been tasked with writing a recursive query that returns community_guid, object_guid, parent_guid, and is_disabled for all container and content objects which are children of the community with object_guid = 'DF5E1A78-0973-4B02-AC33-5FF211F115B4'.
 
 ### Task 6
 Your code from task 5 was submitted for review but the team wasn't impressed with the performance or complexity. Write this query again so that it returns the same results but doesn't use recursion.
@@ -68,23 +72,23 @@ The deployment team has asked that you provide a DACPAC file to them for deploym
 The deployment team liked your submission from task 8, and they want a PowerShell script to run it for them with the mandatory command line parameters but their PS expert is on vacation. Can you provide a script they can use?
 
 ### Task 10
-The production DBAs have noticed a performance problem! They have determined that a platform DAL call which gets a community ID for a URL is being called with high frequency and that it ultimately calls the stored procedure *object.GetParentCommunity*. You take a look and realize the procedure is very old and via a source control check note it was written by a JS developer...  
-You have been tasked with fixing this procedure to ensure it returns the following attributes for the parent community object in the most efficient manner possible.  
-Params: object_guid, title, createddate.
+The production DBAs have noticed a performance problem! They have determined that a platform DAL call which fetches a community ID for a URL is being called with high frequency and that it ultimately calls the stored procedure *object.GetParentCommunity*. You take a look and realize the procedure is very old and via a source control check note it was written by a JS developer...  
+You have been tasked with fixing this procedure to ensure it returns the following columns for the parent community object in the most efficient manner possible.  
+Columns: object_guid, title, createddate.
 Changing input parameters *is* allowed, use comments to explain any changes made.
 
 ### Task 11
-Your sprint team C# developers have updated their code and now they only need the community GUID for a series of objects passed in. You've been tasked with providing them a stored procedure they can call to get parent community GUIDs for a set of object GUIDs passed in.
+Your sprint team C# developers have updated their code and now they only need the community GUID for a series of objects passed in. You've been tasked with providing them a stored procedure they can call to get correlated parent community GUIDs for a list of object GUIDs passed in.
 
 ### Task 12
-Your sprint is in jeopardy! Your team committed to implementing some new functionality in this sprint and things were going smoothly until your testers tried to actually use the feature. The feature allows deleting of containers (exclusive of community objects) and the testers have found they can't delete pages, spaces, channels, or folders that have any child objects. You sit with the C# developers and determine that they're calling object.DeleteObject from the DAL. Your task is to make whatever changes are neccesary to get this functionality working in a the most scalable and maintainable way possible. Any changes or new code you write should be heavily commented to show intent and/or reasoning.
+Your sprint is in jeopardy! Your team committed to implementing some new functionality in this sprint and things were going smoothly until your testers tried to actually use the feature. The feature allows deleting of containers (exclusive of community objects) and the testers have found they can't delete pages, spaces, channels, or folders that have any child objects. You sit with the C# developers and determine that they're calling object.DeleteObject from the DAL. Your task is to make whatever changes are neccesary to get this functionality working in the most scalable and maintainable way possible. Any changes or new code you write should be heavily commented to show intent and/or reasoning.
 
 ###Task 13
-It's another bug. The sales team at iGleww recently signed up a large customer that produces artisanal organizational charts. This customer has multiple communities that share users and their company auditors have noticed that reports from iGleww regarding user login times don't match their firewall records. iGleww second-level support has investigated and determined that the users they are complaining about are all members of more than one community. You recall that there was or is a table named dbo.Person_community_Membership which relates users to communities. Support also logs that they have noted that the last login time is being set with a call to the stored procedure dbo.Login_UpdateUser. You are tasked with fixing this issue and are free to change both DDL and DML as needed.
+It's another bug. The sales team at iGleww recently signed up a large customer that produces artisanal organizational charts. This customer has multiple communities that share users and their company auditors have noticed that reports from iGleww regarding user login times don't match their firewall records. iGleww second-level support has investigated and determined that the users they are complaining about are all members of more than one community. You recall that there was or is a table named dbo.Person_community_Membership which relates users to communities. Support has also noted that the last login time is being set with a call to the stored procedure dbo.Login_UpdateUser. You are tasked with fixing this issue and are free to change both DDL and DML as needed.
 
 ###Task 14
-The data architect at iGleww abruptly stands up in the middle off the office. She begins screaming obscenities and you catch something about "object.new", string manipulation, CPU costs, C#, and then HR rushes over to calm her. A few days pass and the previous data architect is promoted to director of the collections department and you've been promoted to data architect - congratulations!  
-Your first task is generating a backlog of issues for the data team to resolve and you start by looking at the object.new stored procedure. You notice several issues with this procedure and then realize these mistakes are repeated throughout the database solution. You have the full buy-in from the platform developers to change any interfaces (stored procedure inputs and outputs are interfaces) you feel need changing.  
+The data architect at iGleww abruptly stands up in the middle of the office. She begins screaming obscenities and you catch something about "object.new", string manipulation, CPU costs, C#, and then HR rushes over to calm her. A few days pass and the previous data architect is promoted to director of the collections department and you've been promoted to data architect - congratulations!  
+Your first task is generating a backlog of issues for the data team to resolve and you start by looking at the object.new stored procedure. You notice several issues with this procedure and then realize these mistakes are repeated throughout the database solution. You have full buy-in from platform developers to change any interfaces (stored procedure inputs and outputs are interfaces) you feel need changing.  
 Fix object.new to streamline creation of objects, and then document all other changes you feel the team needs to make to arrive at a solution you feel is robust, scalable, and properly documented. For each issue identified be as verbose or as brief as required.
 
 ###Task 15 (Optional)
